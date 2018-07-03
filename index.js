@@ -13,24 +13,9 @@ restService.use(
 
 restService.use(bodyParser.json());
 
-restService.post("/restaurant", function(req, res){
- 
-  var foods = req.body.parameters.foods
-  var priceLevel = req.body.parameters.priceLevel
-  var queryResult = foods+ priceLevel
 
-
-  return res.json({
-    speech : queryResult,
-    displayText: queryResult,
-    source: "webhook-echo-sample"
-    });
-
-  });
 
 restService.post("/echo", function(req, res) {
-  
-
 
   var speech =
     req.body.result &&
