@@ -5,32 +5,6 @@ const bodyParser = require("body-parser");
 
 const restService = express();
 
-const express = require('express');
-const app = express();
-app.use( express.json() );
-
-app.get('/', (req, res) => processWebhook( req, res ));
-
-app.listen(3000, () => console.log('App listening on port 3000!'));
-
-restService.use(
-  bodyParser.urlencoded({
-    extended: true
-  })
-);
-
-var processWebhook = function( request, response ){
-  console.log('Dialogflow Request headers: ' + JSON.stringify(request.headers));
-  console.log('Dialogflow Request body: ' + JSON.stringify(request.body));
-  if (request.body.result) {
-    processV1Request(request, response);
-  } else if (request.body.queryResult) {
-    // processV2Request(request, response);
-  } else {
-    console.log('Invalid Request');
-    return response.status(400).end('Invalid Webhook Request (expecting v1 or v2 webhook request)');
-  }
-};
 
 restService.use(bodyParser.json());
 
