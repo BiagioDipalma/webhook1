@@ -5,6 +5,14 @@ const bodyParser = require("body-parser");
 
 const restService = express();
 
+const express = require('express');
+const app = express();
+app.use( express.json() );
+
+app.get('/', (req, res) => processWebhook( req, res ));
+
+app.listen(3000, () => console.log('App listening on port 3000!'));
+
 restService.use(
   bodyParser.urlencoded({
     extended: true
@@ -13,14 +21,7 @@ restService.use(
 
 restService.use(bodyParser.json());
 
-exports.webhook = functions.https.onRequest((request, response) => {
-  response.send({
-      speech: "hello from webhook!"
-  });
-});
-
-restService.post("/echo", function(req, res) {
-
+var processWebhook = function( request, response ){
   var speech =
     req.body.result &&
     req.body.result.parameters &&
@@ -32,7 +33,9 @@ restService.post("/echo", function(req, res) {
     displayText: speech,
     source: "webhook-echo-sample"
   });
-});
+
+}
+
 
 restService.post("/audio", function(req, res) {
   var speech = "";
