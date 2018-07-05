@@ -19,9 +19,24 @@ restService.use(
   })
 );
 
+var processWebhook = function( request, response ){
+  console.log('Dialogflow Request headers: ' + JSON.stringify(request.headers));
+  console.log('Dialogflow Request body: ' + JSON.stringify(request.body));
+  if (request.body.result) {
+    processV1Request(request, response);
+  } else if (request.body.queryResult) {
+    // processV2Request(request, response);
+  } else {
+    console.log('Invalid Request');
+    return response.status(400).end('Invalid Webhook Request (expecting v1 or v2 webhook request)');
+  }
+};
+
 restService.use(bodyParser.json());
 
-var processWebhook = function( request, response ){
+
+restService.post("/echo", function(req, res) {
+
   var speech =
     req.body.result &&
     req.body.result.parameters &&
@@ -33,9 +48,7 @@ var processWebhook = function( request, response ){
     displayText: speech,
     source: "webhook-echo-sample"
   });
-
-}
-
+});
 
 restService.post("/audio", function(req, res) {
   var speech = "";
