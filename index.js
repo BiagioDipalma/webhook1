@@ -9,9 +9,9 @@ const restService = express();
 restService.use(bodyParser.json());
 
 
-restService.post("/echo", function(req, res) {
+restService.post("echo", function(req, res) {
 
-  var speech = "ho from webhook"
+  var speech = "hi from webhook"
   return res.json({
     speech: speech,
     displayText: speech,
