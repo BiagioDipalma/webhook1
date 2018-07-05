@@ -13,7 +13,11 @@ restService.use(
 
 restService.use(bodyParser.json());
 
-
+exports.webhook = functions.https.onRequest((request, response) => {
+  response.send({
+      speech: "hello from webhook!"
+  });
+});
 
 restService.post("/echo", function(req, res) {
 
