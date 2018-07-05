@@ -9,11 +9,8 @@ app.get("/", function(req,res){
 app.listen(port);
 
 server.post('/getMovies',function (request,response)  {
-  if(request.body.result.parameters['CityHall']) {
-    response.send(JSON.stringify{
+    response.send(JSON.stringify({
       "speech": "provaConnesso?",
       "displayText": "provaconnesso)"
-    });  
-
-    }
+    }));  
 });
